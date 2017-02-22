@@ -1,0 +1,74 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404
+{\fonttbl\f0\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red63\green105\blue30;}
+\margl1440\margr1440\vieww10800\viewh10700\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf2 #Name : Juliana De La Vega Fernandez\
+#Studen number: 1003092468\
+#Email: jdelavegaf@cs.toronto.edu\
+\
+#Compilation\
+To run this assignment, you will need to run each of these files in python.\
+\
+#Solve Problem 1.1\
+./A1_11_ReverseComplementDNA.py\
+\
+#Solve Problem 1.2\
+./A1_12_StringsFromDNAAlphabet.py\
+\
+#Solve Problem 1.3\
+./A1_13_Hamming_Neighbourhood.py\
+\
+#Solve Problem 1.4\
+./A1_14_Kmer_Counting.py\
+\
+'''\
+Note: The program expects to have the chr20.fa file in the directory\
+1.4. k-mer Counting\
+a) How much memory did your solution require?\
+The solution spent 40.64547 seconds while it obtained the dictionary, and it took up around 1.4 GB of RAM.\
+\
+b) Will the memory usage of your program increase if we try to count longer k-mers?\
+Yes, the memory usage will increase. For example, the 50-mer version of the algorithm uses all the RAM memory available in my computer. \
+\
+c) Describe an alternative solution that would be more memory efficient\
+A Knuth-Morris-Pratt algorithm might be implemented for this type of search generating a time complexity of O(k), where k is the number of comparisons. Whereas the current algorithm is order O(kN) where N is the length of the sequence studied. \
+'''\
+\
+#Solve Problem 2.1\
+./A1_21_Backtracing_DPMatrix.py\
+\
+#Solve Problem 2.2\
+./A1_22_OptimalAlignments.py\
+\
+'''\
+2.2. Counting the number of optimal alignments\
+The feature of the strings that causes the multiple equivalent alignments is the repetition of bases along the strings, with a single pairing along the compared string. In this case, string X has three adenine, whereas string Y has only one; and conversely, the ninth base of string X is a single thiamine, while string Y has two along this position. This allows for multiple alignments of the single base with the corresponding repeats on the other string. \
+'''\
+\
+#Solve Problem 2.3\
+'''\
+2.3. Constrained edit distance\
+A refinement that can be performed to the edit distance when at most \'91d\'92 edits can be performed is to only fill the edit distance matrix starting at the diagonal, expanding horizontally until the d edits are reached, obtaining a diagonal bound. \
+\
+Having in mind that the diagonal is expected to have the best alignment between the sequences, the constrained algorithm could start filling each row at the cell where the number of columns equals the number of rows. If there are \'91i\'92 rows and \'91j\'92 columns, the first item to calculate the edit distance for would be (1,1). \
+\
+After (1,1) is calculated, the algorithm will continue to calculate the delta of the edit distance until it reaches a delta that is greater than \'91d\'92. When this delta value is reached, the algorithm will start on the next row, 2, and perform the calculations for the delta for all cells up to the diagonal (2, 2), and after that calculate it for the cells where the delta is lower than the edit distance.\
+\
+If this is continued until (i-1,j-1), the matrix obtained will be completely full in its lower triangle, and the upper triangle will only contain values that are lower than \'91d\'92. \
+\
+It could also be further improved if the lower triangular matrix is not completely filled. For example, when filling a given row i, the calculations would not need to start in the first column, but in the jth column, where (i-1, j) had a delta that was \'91d\'92. This way the complexity of the program would be reduced even more.\
+\
+This would work because only these numbers of the matrix will be needed in order to calculate the alignments within the \'91d\'92 edits. Also, the whole matrix is not required to be filled in order to calculate the rest of the edit distances, with the neighbours it is enough to calculate it.  \
+'''\
+\
+#Solve Problem 3.1\
+'''\
+3.1.Shortest Unique Substring\
+\
+In order to find the shortest unique substring of a string X, we would first need to make a new string X$, where the dollar sign corresponds to the terminal symbol. A suffix tree will then be constructed using the string X$. Afterwards, the tree will be traversed, and for each node a count of the number of leaves will be performed, this may be performed using a depth first search that returns the total number of leaves in each subtree. Finally, we will search for a node closest to the root that has the shortest subtree that doesn\'92t have a branch, in order to guarantee that it is unique. This subtree also only has one leaf, but it is not made up of only the leaf. If the subtree was only a single leaf, we would be dealing with the dollar sign.\
+\
+This will work because the shortest branch of the tree that is not made up of only a leaf will have a unique substring, and because the branch is the shortest one it will also be the shortest substring. \
+'''\
+}

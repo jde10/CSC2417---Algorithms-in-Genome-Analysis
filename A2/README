@@ -1,0 +1,98 @@
+#--------------------------------------------------------------------------------------------------------------
+#                                            Assignment 2 - CSC2417
+#--------------------------------------------------------------------------------------------------------------
+#                                                                           Name: Juliana De La Vega Fernandez
+#                                                                           Student number: 1003092468
+#                                                                           Email: jdelavegaf@cs.toronto.edu
+#--------------------------------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------------------------------
+#Compilation
+#Run on python
+#--------------------------------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------------------------------
+#Solve Problem 1
+
+#a)In order to find the longest repeated substring of T:
+#   1. Do a linear scan through the LCP to find the maximum length (max_len) in the LCP, and the
+#       index i where it is stored in the LCP (max_i).
+#   2. The longest repeated substring pf T will be describe by: T[SA[i], SA[i] + max_len - 1]
+#       using the LCP, the longest repeated substring can be described as:
+#       T[SA[LCP[max_i]], SA[LCP[max_i]] + max_len - 1]
+#       where SA[LCP[max_i]] corresponds to the index in the SA for the LCP, which can be used to
+#       find the location in T.
+
+
+#b)In order to find all the minimal unique substrings S in T:**
+#   1. Build the sorted SA, storing the index value of the starting point of each suffix within the sequence
+#   2. Start S array of size n, with all 0 elements
+#   3. For i in range (1, n)
+#       max_LCP =  length of the maximum alike elements between LCP[i] and LCP[i+1]
+#       S[SA[i]+ max_LCP] = take the maximum between S[SA[i] + max_LCP] and SA[i], to see if the substring found
+#                           is unique within the sequence we search between its neighbours. This will
+#   4. Search for S in the SA, replacing the values for start to finish using the index values from the sequence.
+#   This was adapted from: Ilie, L. and Smyth, W.F. Minimum Unique Substrings and Maximum Repeats.
+#   http://www.cas.mcmaster.ca/~bill/best/algorithms/11MinUnique.pdf
+#--------------------------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------------------------
+#Solve Problem 2
+
+./fmindex_original.py
+#a) ./fmindex_original.py
+#   GCGCGGTGGCTCACGCCTGTAATCCCAG occurs 5 times
+
+./fmindex.py
+#b) ./fmindex.py
+#GCGCGGTGGCTCACGCCTGTAATCCCAG occurs 5 times
+#--------------------------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------------------------
+#Solve Problem 3
+
+./A2_Kmer_Counting.py
+#a) ./A2_Kmer_Counting.py
+# approx 21-mer bar height: 215139
+
+./A2_Kmer_Count_CMS.py
+#b) ./A2_Kmer_Count_CMS.py
+#For m = 10000
+# Estimate for k-mers = 0
+#For m = 50000
+# Estimate for k-mers = 4750
+#For m = 100000
+# Estimate for k-mers = 62241
+#For m = 500000
+# Estimate for k-mers = 212337
+#For m = 1000000
+# Estimate for k-mers = 215010
+
+#c)The CMS will report false positives if not enough memory is allocated to it. As
+#   more memory is allocated, the result will become more precise, less false positives
+#   and more true positives will be detected. The effect on the error correction algorithm
+#   will be that when not enough memory is allocated, CMS increments the count of k-mers that appear only
+#   once, hence the false positives. When more memory is allocated,k-mers repeating only once will be detected
+#   and corrected (changed) to the nearest neighbours value. The error correction graph will not have the great
+#   depressions that are caused by false positives. As the memory allocated is increased, the amount of
+#   errors detected and corrected is higher.
+#--------------------------------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------------------------------
+#Solve Problem 4
+#a) One of the problems that will be present is the assembly of single organisms due to the
+ #  repetitiveness of DNA across organisms. It would be difficult to attribute one genome to
+ #  a certain organism, and also to differentiate that genome from the rest. On the other hand,
+ #  because there is variation within the same species, it should be determined if these differences
+ #  will be taken into account as to build individual genomes. Or if they should be common for the
+ #  species as a whole. The depth of coverage is another issue, some organisms may have different depths
+ #  of coverage. In the de Bruijin graphs, the higher the depth of coverage, the more errors are amplified
+ #  in the assembly graph. It is best to apply other algorithms for multiple genome assembly, rather than
+ #  the ones developed for single genome assembly.
+ #
+ #  Within the example, because all three species are bacteria, we possibly will not be able to distinguish in our
+ #  reads which ones belong to which bacteria. This is because they will have great overlap of the majority of
+ #  their genomes. And their DeBruijin graphs can loop and not be able to separate between the different species.
+ #  Also, distinguishing between the individuals will be a hard task. 
