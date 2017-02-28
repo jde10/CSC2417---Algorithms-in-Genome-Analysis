@@ -1,0 +1,71 @@
+Instructions For Use
+
+The Folder contains four Subfolders which will be described below.
+
+1. Folder "Algorithm"
+Contents:
+    - multi_NMCTS.py
+    - Node.py
+    - RunMCTS.py
+    - transformResultToFasta.py
+    - commandforall.py
+Description:
+    - multi_NMCTS.py: The implementation of the Class which performs Monte Carlo Tree Search for multiple sequence alignment.
+    - Node.py: The implementation of the Class node which will be used by the Monte Carlo Tree Search.
+    - RunMCTS.py: An Example on How to run the MCTS for a directory of files.
+    - transformResultToFasta.py: An example on how to transform the .npz file obtained from running NMCTS.py into a
+                                 Fasta for use in scoring.
+    - commandforall.py: An example on a script for obtaining the scores for multiple Fasta files in a directory. The script
+                        is saved to a .txt file. The contents of the file can be copied to the terminal on the qscore folder.
+
+    In order to run NMCTS: in python:
+        from NMCTS import NMonteCarlo
+        sequence = [[A],[B],[C], ... , [N]] # Where A, B, C ... N are all strings
+        id = [[id_A],[id_B], [id_C], ..., [id_N]] # where id_A is the identification of sequence A (for example species) , a string.
+        name = 'filename' # a string with the file name
+        pair_time = X # where X is an integer, its the number of seconds each pairwise alignment will be allowed to have
+        total_time = Y # where Y is an integer, its the number of seconds the MSA will be allowed to have.
+
+        NMonteCarlo (sequence, id, name, pair_time, total_time, 1)
+
+
+    Once finished running, filename.npz will be in the directory. The result needs to be transformed to fasta format
+
+        name = 'fasta_alignment'
+        data = np.load('filename.npz')
+        alignment = data['alignment']
+        id_order = data['id_order']
+        order = data['order']
+
+        for i in range(alignment.shape[0]): # number of alignments made
+            rec = []
+            for j in range(alignment.shape[1]): # number of sequences
+                for k in range(alignment.shape[1]): # number of sequences again
+                    if order[i, k] == j:
+                        s = ''.join(alignment[i,k])
+                        s = s.replace("-", ".")
+
+                        s_rec = SeqRecord(Seq(s, generic_protein), id=id_order[i,k], description="")
+                        rec.append(s_rec)
+
+            SeqIO.write(rec, name+"_"+str(i), "fasta")
+
+    Place all the Fasta files in a folder, and the reference alignment Fasta files in another folder. Untar the qscore_src.tar.gz
+    file in the qscore folder, and replace the qscore.h file. open a terminal window and cd to the qscore_src folder. run the 'make' command.
+
+    use the following command to get the results, replacing <testfile> to the directory path of the alignment file including file name,
+    and <reffile> to the path and file name of the reference:
+
+    ./qscore -seqdiffwarn -ignoremissingseqs -ignoretestcase -test <testfile> -ref <reffile> -truncname -quiet
+
+2. Folder "Report"
+    Contains the Report in .pdf format, and the zip archive with the tex files.
+
+3. Folder "Fasta Results"
+    Contains the results for the examples shown in the report, and for the results on the Sabre data-set discussed in the report
+
+4. Folder "qscore"
+    Contains the updated qscore.h file that allows the qscore_src to run. Also contains the qscore_src.tar.gz.
+
+5. Folder "Sabre"
+    Contains the SABmark database input sequences and the reference alignment of these. 
